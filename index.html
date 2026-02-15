@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CALZADOS DAMASCO — Cuero Exclusivo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0b09;
+      --surface:  #131110;
+      --card:     #1a1714;
+      --border:   #2e2a25;
+      --gold:     #c9a84c;
+      --gold-lt:  #e5c97a;
+      --gold-dim: #7a6430;
+      --cream:    #f5efe6;
+      --text:     #d4cfc8;
+      --muted:    #7a7269;
+      --accent:   #8b1a1a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* ── Custom scrollbar ──────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+    /* ── NAVBAR ────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 4rem;
+      background: linear-gradient(to bottom, rgba(13,11,9,0.97), transparent);
+      transition: background .4s;
+    }
+    nav.scrolled { background: rgba(13,11,9,0.97); border-bottom: 1px solid var(--border); }
+
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: .25em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--cream); font-weight: 400; }
+
+    .nav-links { display: flex; gap: 2.5rem; }
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: .72rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      transition: color .3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 1px; background: var(--gold);
+      transform: scaleX(0); transform-origin: right;
+      transition: transform .3s ease;
+    }
+    .nav-links a:hover { color: var(--gold-lt); }
+    .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+    .nav-actions { display: flex; align-items: center; gap: 1.6rem; }
+    .cart-btn {
+      position: relative;
+      background: none; border: 1px solid var(--gold-dim);
+      color: var(--gold);
+      padding: .5rem 1.2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .3s;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .cart-btn:hover { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+    .cart-count {
+      background: var(--accent);
+      color: white; border-radius: 50%;
+      width: 18px; height: 18px;
+      font-size: .6rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── HERO ──────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex; align-items: center;
+      overflow: hidden;
+      padding: 0 4rem;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 70% 50%, rgba(201,168,76,.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(139,26,26,.06) 0%, transparent 60%);
+    }
+
+    .hero-lines {
+      position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+    }
+    .hero-lines::before {
+      content: '';
+      position: absolute; top: 10%; right: 8%;
+      width: 500px; height: 500px;
+      border: 1px solid rgba(201,168,76,.08);
+      border-radius: 50%;
+      animation: pulse-ring 6s ease-in-out infinite;
+    }
+    .hero-lines::after {
+      content: '';
+      position: absolute; top: 18%; right: 16%;
+      width: 320px; height: 320px;
+      border: 1px solid rgba(201,168,76,.12);
+      border-radius: 50%;
+      animation: pulse-ring 6s ease-in-out 1.5s infinite;
+    }
+    @keyframes pulse-ring {
+      0%,100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.04); opacity: .5; }
+    }
+
+    .hero-shoe-display {
+      position: absolute; right: 0; top: 0; bottom: 0;
+      width: 55%;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .shoe-visual {
+      width: 520px; height: 520px;
+      position: relative;
+    }
+
+    /* SVG shoe illustration placeholder */
+    .shoe-svg-wrap {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 560px;
+      animation: fadeUp .9s ease forwards;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .65rem; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.8rem;
+    }
+    .hero-badge::before, .hero-badge::after {
+      content: ''; flex: 1; height: 1px; background: var(--gold-dim); width: 30px;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+    .hero-title em {
+      font-style: italic;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 2.8rem;
+      max-width: 420px;
+    }
+
+    .hero-ctas { display: flex; gap: 1.2rem; align-items: center; }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--bg);
+      border: none;
+      padding: .9rem 2.4rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold-lt); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,168,76,.3); }
+
+    .btn-ghost {
+      background: none;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: .9rem 2.4rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem;
+      font-weight: 400;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-ghost:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+    .hero-stats {
+      display: flex; gap: 3rem; margin-top: 4rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-lbl {
+      font-size: .62rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: .3rem;
+    }
+
+    /* ── TICKER ────────────────────────────────── */
+    .ticker {
+      background: var(--gold);
+      padding: .6rem 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .ticker-track {
+      display: flex;
+      animation: ticker-scroll 20s linear infinite;
+      white-space: nowrap;
+    }
+    .ticker-item {
+      flex-shrink: 0;
+      font-family: 'Cinzel', serif;
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--bg);
+      padding: 0 3rem;
+    }
+    .ticker-sep { color: rgba(13,11,9,.3); }
+    @keyframes ticker-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── SECTION COMMON ────────────────────────── */
+    section { padding: 7rem 4rem; }
+
+    .section-label {
+      font-size: .6rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .section-label::after { content: ''; height: 1px; background: var(--gold-dim); width: 40px; }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.2;
+    }
+
+    .section-title em {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--gold);
+    }
+
+    /* ── FEATURED CATEGORIES ───────────────────── */
+    .categories {
+      background: var(--surface);
+    }
+    .cats-header { max-width: 500px; margin-bottom: 4rem; }
+
+    .cats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+    }
+
+    .cat-card {
+      position: relative;
+      height: 380px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .cat-card:first-child { grid-row: span 2; height: 100%; }
+
+    .cat-bg {
+      position: absolute; inset: 0;
+      transition: transform .6s ease;
+    }
+    .cat-card:hover .cat-bg { transform: scale(1.05); }
+
+    .cat-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(13,11,9,.85) 0%, rgba(13,11,9,.2) 60%);
+    }
+    .cat-info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 2rem;
+    }
+    .cat-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: var(--cream);
+      margin-bottom: .4rem;
+    }
+    .cat-count { font-size: .65rem; letter-spacing: .15em; color: var(--gold); text-transform: uppercase; }
+    .cat-arrow {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(201,168,76,.4);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: translateX(-10px);
+      transition: all .35s;
+    }
+    .cat-card:hover .cat-arrow { opacity: 1; transform: translateX(0); }
+
+    /* shoe SVGs within category cards */
+    .cat-shoe {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── PRODUCTS GRID ─────────────────────────── */
+    .products-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 4rem;
+    }
+
+    .filter-tabs { display: flex; gap: .2rem; }
+    .filter-tab {
+      background: none;
+      border: 1px solid transparent;
+      color: var(--muted);
+      padding: .5rem 1.2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .65rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .filter-tab.active, .filter-tab:hover {
+      border-color: var(--gold-dim);
+      color: var(--gold);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: all .4s ease;
+      animation: fadeUp .6s ease forwards;
+      animation-fill-mode: both;
+    }
+    .product-card:nth-child(1) { animation-delay: .05s; }
+    .product-card:nth-child(2) { animation-delay: .1s; }
+    .product-card:nth-child(3) { animation-delay: .15s; }
+    .product-card:nth-child(4) { animation-delay: .2s; }
+    .product-card:nth-child(5) { animation-delay: .25s; }
+    .product-card:nth-child(6) { animation-delay: .3s; }
+    .product-card:nth-child(7) { animation-delay: .35s; }
+    .product-card:nth-child(8) { animation-delay: .4s; }
+    .product-card:hover { border-color: var(--gold-dim); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+
+    .product-img {
+      height: 240px;
+      position: relative;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .product-badge {
+      position: absolute; top: 1rem; left: 1rem;
+      font-size: .58rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: .3rem .7rem;
+      z-index: 2;
+    }
+    .badge-new { background: var(--gold); color: var(--bg); }
+    .badge-sale { background: var(--accent); color: white; }
+    .badge-exclusive { background: var(--surface); color: var(--gold); border: 1px solid var(--gold-dim); }
+
+    .product-actions {
+      position: absolute; inset: 0;
+      background: rgba(13,11,9,.6);
+      display: flex; align-items: center; justify-content: center; gap: 1rem;
+      opacity: 0;
+      transition: opacity .35s;
+    }
+    .product-card:hover .product-actions { opacity: 1; }
+
+    .action-btn {
+      width: 42px; height: 42px;
+      border: 1px solid rgba(255,255,255,.3);
+      background: rgba(13,11,9,.7);
+      color: var(--cream);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      transition: all .25s;
+    }
+    .action-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--bg); }
+    .action-btn.add-cart { width: auto; padding: 0 1.4rem; font-family: 'Montserrat', sans-serif; font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; }
+
+    .product-info { padding: 1.4rem; }
+
+    .product-brand {
+      font-size: .58rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .3rem;
+    }
+
+    .product-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      color: var(--cream);
+      margin-bottom: .6rem;
+      line-height: 1.3;
+    }
+
+    .product-rating {
+      display: flex; align-items: center; gap: .5rem;
+      margin-bottom: .8rem;
+    }
+    .stars { color: var(--gold); font-size: .7rem; letter-spacing: .06em; }
+    .rating-count { font-size: .6rem; color: var(--muted); }
+
+    .product-footer {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .product-price { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--cream); }
+    .price-old { font-size: .8rem; color: var(--muted); text-decoration: line-through; margin-right: .4rem; font-family: 'Montserrat', sans-serif; }
+    .product-sizes {
+      display: flex; gap: .3rem;
+    }
+    .size-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+    .size-dot.avail { background: var(--gold-dim); }
+
+    /* ── CRAFTSMANSHIP SECTION ─────────────────── */
+    .craft {
+      background: var(--surface);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      padding: 0;
+    }
+
+    .craft-visual {
+      background: var(--card);
+      min-height: 600px;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    .craft-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 70% at 50% 50%, rgba(201,168,76,.08), transparent);
+    }
+
+    .craft-content {
+      padding: 6rem 5rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+
+    .craft-features {
+      display: flex; flex-direction: column; gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .craft-feature {
+      display: flex; gap: 1.5rem; align-items: flex-start;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .craft-feature:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .craft-num {
+      font-family: 'Cinzel', serif;
+      font-size: .75rem;
+      color: var(--gold);
+      min-width: 28px;
+    }
+
+    .craft-ft-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      color: var(--cream);
+      margin-bottom: .4rem;
+    }
+
+    .craft-ft-desc {
+      font-size: .72rem;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    /* ── TESTIMONIALS ──────────────────────────── */
+    .testimonials { background: var(--bg); }
+    .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 4rem; }
+
+    .testi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      position: relative;
+    }
+    .testi-card::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 6rem;
+      color: var(--gold-dim);
+      opacity: .3;
+      position: absolute; top: .5rem; left: 1.5rem;
+      line-height: 1;
+    }
+
+    .testi-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 1.8rem;
+      position: relative; z-index: 1;
+    }
+
+    .testi-author { display: flex; align-items: center; gap: 1rem; }
+    .testi-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--border);
+      border: 1px solid var(--gold-dim);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: .8rem;
+      color: var(--gold);
+    }
+    .testi-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--cream);
+    }
+    .testi-role { font-size: .6rem; letter-spacing: .15em; color: var(--muted); text-transform: uppercase; margin-top: .1rem; }
+
+    /* ── NEWSLETTER ────────────────────────────── */
+    .newsletter {
+      background: linear-gradient(135deg, #1a1410 0%, #0d0b09 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 6rem 4rem;
+    }
+
+    .newsletter h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      color: var(--cream);
+      margin-bottom: .8rem;
+    }
+    .newsletter p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 480px; margin: 0 auto;
+      gap: 0;
+    }
+    .newsletter-form input {
+      flex: 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-right: none;
+      color: var(--text);
+      padding: .9rem 1.4rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .72rem;
+      outline: none;
+      transition: border-color .3s;
+    }
+    .newsletter-form input:focus { border-color: var(--gold-dim); }
+    .newsletter-form input::placeholder { color: var(--muted); }
+    .newsletter-form button {
+      background: var(--gold);
+      color: var(--bg);
+      border: none;
+      padding: .9rem 1.8rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .65rem;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .3s;
+    }
+    .newsletter-form button:hover { background: var(--gold-lt); }
+
+    /* ── FOOTER ────────────────────────────────── */
+    footer {
+      background: var(--surface);
+      padding: 5rem 4rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-brand .logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+    .footer-brand p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      max-width: 280px;
+    }
+
+    .social-links { display: flex; gap: .8rem; }
+    .social-link {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .85rem;
+      transition: all .3s;
+    }
+    .social-link:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+    .footer-col h4 {
+      font-family: 'Cinzel', serif;
+      font-size: .7rem;
+      letter-spacing: .2em;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+      padding-bottom: .8rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .7rem; }
+    .footer-col a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .72rem;
+      transition: color .3s;
+    }
+    .footer-col a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-bottom p { font-size: .62rem; color: var(--muted); letter-spacing: .08em; }
+    .footer-payments { display: flex; gap: .6rem; align-items: center; }
+    .payment-badge {
+      font-size: .55rem;
+      letter-spacing: .12em;
+      padding: .25rem .6rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── CART SIDEBAR ──────────────────────────── */
+    .cart-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.7);
+      z-index: 200;
+      opacity: 0; pointer-events: none;
+      transition: opacity .35s;
+    }
+    .cart-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .cart-sidebar {
+      position: fixed; top: 0; right: 0; bottom: 0;
+      width: 420px;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      z-index: 201;
+      transform: translateX(100%);
+      transition: transform .4s cubic-bezier(.4,0,.2,1);
+      display: flex; flex-direction: column;
+    }
+    .cart-sidebar.open { transform: translateX(0); }
+
+    .cart-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .cart-header h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--cream);
+      letter-spacing: .1em;
+    }
+    .close-cart {
+      background: none; border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 1.4rem;
+      line-height: 1;
+      transition: color .25s;
+    }
+    .close-cart:hover { color: var(--cream); }
+
+    .cart-body { flex: 1; overflow-y: auto; padding: 1.5rem 2rem; }
+
+    .cart-empty {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 100%;
+      gap: 1rem;
+    }
+    .cart-empty-icon { font-size: 3rem; opacity: .2; }
+    .cart-empty p { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--muted); font-size: 1rem; }
+
+    .cart-item {
+      display: flex; gap: 1.2rem; align-items: flex-start;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cart-item-img {
+      width: 70px; height: 70px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+    }
+    .cart-item-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--cream);
+      margin-bottom: .3rem;
+    }
+    .cart-item-detail { font-size: .62rem; color: var(--muted); letter-spacing: .12em; text-transform: uppercase; }
+    .cart-item-price { font-family: 'Cinzel', serif; font-size: .9rem; color: var(--gold); margin-top: .5rem; }
+    .cart-item-qty {
+      display: flex; align-items: center; gap: .7rem; margin-top: .5rem;
+    }
+    .qty-btn {
+      width: 22px; height: 22px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--text);
+      cursor: pointer;
+      font-size: .9rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .25s;
+    }
+    .qty-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+    .qty-num { font-size: .72rem; min-width: 16px; text-align: center; }
+    .remove-item {
+      margin-left: auto;
+      background: none; border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: .9rem;
+      transition: color .25s;
+    }
+    .remove-item:hover { color: var(--accent); }
+
+    .cart-footer {
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .cart-subtotal {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 1rem;
+    }
+    .cart-subtotal span:first-child { font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+    .cart-subtotal span:last-child { font-family: 'Cinzel', serif; font-size: 1.2rem; color: var(--cream); }
+    .checkout-btn {
+      width: 100%;
+      background: var(--gold);
+      color: var(--bg);
+      border: none;
+      padding: 1.1rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .3s;
+      margin-bottom: .8rem;
+    }
+    .checkout-btn:hover { background: var(--gold-lt); }
+    .continue-btn {
+      width: 100%;
+      background: none;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: .8rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .65rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .continue-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+    /* ── TOAST ─────────────────────────────────── */
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--gold);
+      color: var(--bg);
+      padding: .8rem 2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .68rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      z-index: 300;
+      transition: transform .4s cubic-bezier(.4,0,.2,1);
+      white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── RESPONSIVE ────────────────────────────── */
+    @media (max-width: 1024px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 5rem 1.5rem; }
+      .hero { padding: 0 1.5rem; }
+      .hero-shoe-display { display: none; }
+      .cats-grid { grid-template-columns: 1fr; }
+      .cat-card:first-child { height: 380px; }
+      .craft { grid-template-columns: 1fr; }
+      .craft-visual { min-height: 300px; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .cart-sidebar { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <!--
+    <a href="#" class="nav-logo">DAMASCO<span> CALZADOS</span></a>
+    -->
+    <a href="#" class="nav-logo"><span><img src="img/damasco.jpg" width="170" height="100"/></span></a>
+    <div class="nav-links">
+      <a href="#coleccion">Colección</a>
+      <a href="#artesania">Artesanía</a>
+      <a href="#categorias">Categorías</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="nav-actions">
+      <button class="cart-btn" onclick="openCart()">
+        <span>🛒</span> Carrito
+        <span class="cart-count" id="cart-count">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg"></div>
+    <div class="hero-lines"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">— Colección 2025 —</div>
+      <h1 class="hero-title">
+        Arte en<br>cada paso
+        <em>Cuero Italiano Exclusivo</em>
+      </h1>
+      <p class="hero-sub">
+        Cada par es una obra maestra. Elaborado a mano por maestros artesanos
+        con los cueros más nobles del mundo.
+      </p>
+      <div class="hero-ctas">
+        <a href="#coleccion" class="btn-primary">Explorar Colección</a>
+        <a href="#artesania" class="btn-ghost">Nuestra Historia</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">1.200+</div>
+          <div class="stat-lbl">Pares Vendidos</div>
+        </div>
+        <div>
+          <div class="stat-num">40+</div>
+          <div class="stat-lbl">Años de Arte</div>
+        </div>
+        <div>
+          <div class="stat-num">100%</div>
+          <div class="stat-lbl">Cuero Natural</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-shoe-display">
+      <div class="shoe-visual">
+        <svg viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;filter:drop-shadow(0 40px 80px rgba(201,168,76,0.2))">
+          <!-- Decorative ring -->
+          <circle cx="260" cy="260" r="200" stroke="rgba(201,168,76,0.06)" stroke-width="1"/>
+          <circle cx="260" cy="260" r="160" stroke="rgba(201,168,76,0.08)" stroke-width="1"/>
+          <!-- Oxford Shoe illustration -->
+          <g transform="translate(60, 130)">
+            <!-- Sole -->
+            <path d="M30 280 Q10 280 8 265 L5 240 Q4 228 18 224 L355 190 Q375 188 385 198 L395 215 Q400 228 385 238 L360 245 Q340 250 320 248 L60 268 Q45 270 30 280Z" fill="#1a1410" stroke="#c9a84c" stroke-width="1.5"/>
+            <!-- Heel -->
+            <path d="M355 190 L375 185 Q395 178 400 190 L400 220 Q400 235 385 240 L360 245 Z" fill="#2a1e10" stroke="#c9a84c" stroke-width="1.5"/>
+            <!-- Upper body -->
+            <path d="M20 224 L22 200 Q24 160 50 140 L120 110 Q160 95 200 92 L300 88 Q340 86 365 100 L380 115 Q388 128 385 148 L382 190 Z" fill="#2c1f12" stroke="#c9a84c" stroke-width="1.5"/>
+            <!-- Toe cap -->
+            <path d="M22 200 Q24 165 48 145 L115 116 Q150 104 185 100 L210 98 L200 115 Q170 118 145 132 L80 160 Q55 175 42 200 Z" fill="#251a0e" stroke="#c9a84c" stroke-width="1"/>
+            <!-- Laces area -->
+            <path d="M200 98 L300 88 Q340 86 365 100 L380 115 L370 118 L300 108 L220 115 L200 115 Z" fill="#1e160a" stroke="#c9a84c" stroke-width="1"/>
+            <!-- Lace holes and laces -->
+            <g stroke="#c9a84c" stroke-width="1.2" opacity="0.8">
+              <line x1="218" y1="112" x2="248" y2="108"/>
+              <line x1="258" y1="107" x2="288" y2="104"/>
+              <line x1="298" y1="103" x2="328" y2="102"/>
+              <line x1="338" y1="102" x2="362" y2="104"/>
+              <!-- eyelets -->
+              <circle cx="218" cy="112" r="2.5" fill="#c9a84c"/>
+              <circle cx="248" cy="108" r="2.5" fill="#c9a84c"/>
+              <circle cx="258" cy="107" r="2.5" fill="#c9a84c"/>
+              <circle cx="288" cy="104" r="2.5" fill="#c9a84c"/>
+              <circle cx="298" cy="103" r="2.5" fill="#c9a84c"/>
+              <circle cx="328" cy="102" r="2.5" fill="#c9a84c"/>
+              <circle cx="338" cy="102" r="2.5" fill="#c9a84c"/>
+              <circle cx="362" cy="104" r="2.5" fill="#c9a84c"/>
+            </g>
+            <!-- Highlight -->
+            <path d="M50 140 Q80 120 130 108 L170 100 Q140 118 110 138 Q80 155 60 178" stroke="rgba(201,168,76,0.2)" stroke-width="2" fill="none"/>
+          </g>
+          <!-- Gold decorative text -->
+          <text x="260" y="460" text-anchor="middle" fill="rgba(201,168,76,0.15)" font-family="Cinzel, serif" font-size="11" letter-spacing="8">ARTESANAL · EXCLUSIVO · CUERO</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">Envío Gratuito en Pedidos +$500 <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Cuero Full-Grain de Italia <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Garantía de Por Vida en Suela <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Nuevos Modelos Cada Temporada <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Devolución Gratuita en 30 Días <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Fabricado a Mano en España <span class="ticker-sep">◆</span></span>
+      <!-- Duplicate for infinite scroll -->
+      <span class="ticker-item">Envío Gratuito en Pedidos +$500 <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Cuero Full-Grain de Italia <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Garantía de Por Vida en Suela <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Nuevos Modelos Cada Temporada <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Devolución Gratuita en 30 Días <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Fabricado a Mano en España <span class="ticker-sep">◆</span></span>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <section class="categories" id="categorias">
+    <div class="cats-header">
+      <div class="section-label">Explorar</div>
+      <h2 class="section-title">Por <em>Categoría</em></h2>
+    </div>
+    <div class="cats-grid">
+      <div class="cat-card" onclick="filterProducts('Oxford')">
+        <div class="cat-bg" style="background:linear-gradient(145deg,#1a1208,#2a1e10)">
+          <div class="cat-shoe" style="opacity:.5">
+            <svg viewBox="0 0 320 320" width="280" height="280" fill="none">
+              <g transform="translate(20,60)">
+                <path d="M20 220 Q5 220 4 205 L2 182 Q1 172 14 168 L265 140 Q280 138 288 148 L295 162 Q298 172 285 180 L262 185 Q244 190 228 188 L48 205 Q34 207 20 220Z" fill="#2c1f12" stroke="#c9a84c" stroke-width="1.5"/>
+                <path d="M270 140 L285 136 Q300 130 304 142 L304 168 Q304 180 288 184 L262 188Z" fill="#231810" stroke="#c9a84c" stroke-width="1.5"/>
+                <path d="M15 168 L17 148 Q19 112 42 94 L100 68 Q134 55 165 52 L240 48 Q268 46 282 58 L293 72 Q300 84 297 102 L294 140Z" fill="#3a2918" stroke="#c9a84c" stroke-width="1.5"/>
+                <path d="M17 148 Q19 118 40 102 L95 76 L155 60 L165 74 Q136 80 106 96 L60 122 Q38 136 30 156Z" fill="#2e2010" stroke="#c9a84c" stroke-width="1"/>
+                <g stroke="#c9a84c" stroke-width="1" opacity=".7">
+                  <line x1="162" y1="66" x2="186" y2="62"/><line x1="196" y1="61" x2="220" y2="58"/>
+                  <line x1="230" y1="57" x2="254" y2="56"/><line x1="264" y1="56" x2="284" y2="58"/>
+                  <circle cx="162" cy="66" r="2" fill="#c9a84c"/><circle cx="186" cy="62" r="2" fill="#c9a84c"/>
+                  <circle cx="196" cy="61" r="2" fill="#c9a84c"/><circle cx="220" cy="58" r="2" fill="#c9a84c"/>
+                  <circle cx="230" cy="57" r="2" fill="#c9a84c"/><circle cx="254" cy="56" r="2" fill="#c9a84c"/>
+                  <circle cx="264" cy="56" r="2" fill="#c9a84c"/><circle cx="284" cy="58" r="2" fill="#c9a84c"/>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div class="cat-overlay"></div>
+        <div class="cat-info">
+          <div class="cat-name">Oxford Clásico</div>
+          <div class="cat-count">18 Modelos</div>
+        </div>
+        <div class="cat-arrow">→</div>
+      </div>
+
+      <div class="cat-card" onclick="filterProducts('Derby')">
+        <div class="cat-bg" style="background:linear-gradient(145deg,#0d1018,#111820)">
+          <div class="cat-shoe" style="opacity:.5">
+            <svg viewBox="0 0 260 220" width="200" height="180" fill="none">
+              <path d="M15 170 Q3 170 2 157 L1 140 Q0 132 10 129 L210 105 Q222 103 228 111 L234 123 Q237 131 226 137 L205 142 Q190 146 178 144 L38 158 Q27 160 15 170Z" fill="#1a2030" stroke="#c9a84c" stroke-width="1.5"/>
+              <path d="M12 129 L14 110 Q15 80 34 64 L82 40 Q110 28 136 25 L196 21 Q218 19 228 30 L236 43 Q242 55 240 70 L237 105Z" fill="#202840" stroke="#c9a84c" stroke-width="1.5"/>
+              <path d="M137 25 L196 21 L228 30 L236 43 L228 46 L196 38 L150 40 L137 38 Z" fill="#161e30" stroke="#c9a84c" stroke-width="1"/>
+              <g stroke="#c9a84c" stroke-width="1" opacity=".7">
+                <line x1="150" y1="38" x2="170" y2="35"/><line x1="178" y1="34" x2="198" y2="32"/>
+                <line x1="206" y1="31" x2="222" y2="32"/>
+                <circle cx="150" cy="38" r="2" fill="#c9a84c"/><circle cx="170" cy="35" r="2" fill="#c9a84c"/>
+                <circle cx="178" cy="34" r="2" fill="#c9a84c"/><circle cx="198" cy="32" r="2" fill="#c9a84c"/>
+                <circle cx="206" cy="31" r="2" fill="#c9a84c"/><circle cx="222" cy="32" r="2" fill="#c9a84c"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div class="cat-overlay"></div>
+        <div class="cat-info">
+          <div class="cat-name">Derby Ejecutivo</div>
+          <div class="cat-count">12 Modelos</div>
+        </div>
+        <div class="cat-arrow">→</div>
+      </div>
+
+      <div class="cat-card" onclick="filterProducts('Mocasín')">
+        <div class="cat-bg" style="background:linear-gradient(145deg,#140d0d,#241410)"></div>
+        <div class="cat-overlay"></div>
+        <div class="cat-info">
+          <div class="cat-name">Mocasines</div>
+          <div class="cat-count">9 Modelos</div>
+        </div>
+        <div class="cat-arrow">→</div>
+      </div>
+
+      <div class="cat-card" onclick="filterProducts('Bota')">
+        <div class="cat-bg" style="background:linear-gradient(145deg,#0d1208,#141a0a)"></div>
+        <div class="cat-overlay"></div>
+        <div class="cat-info">
+          <div class="cat-name">Botas Chelsea</div>
+          <div class="cat-count">14 Modelos</div>
+        </div>
+        <div class="cat-arrow">→</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="coleccion">
+    <div class="products-header">
+      <div>
+        <div class="section-label">Colección</div>
+        <h2 class="section-title">Modelos <em>Exclusivos</em></h2>
+      </div>
+      <div class="filter-tabs">
+        <button class="filter-tab active" onclick="filterProducts('all', this)">Todos</button>
+        <button class="filter-tab" onclick="filterProducts('Oxford', this)">Oxford</button>
+        <button class="filter-tab" onclick="filterProducts('Derby', this)">Derby</button>
+        <button class="filter-tab" onclick="filterProducts('Mocasín', this)">Mocasines</button>
+        <button class="filter-tab" onclick="filterProducts('Bota', this)">Botas</button>
+      </div>
+    </div>
+    <div class="products-grid" id="products-grid">
+      <!-- Rendered by JS -->
+    </div>
+  </section>
+
+  <!-- CRAFTSMANSHIP -->
+  <section class="craft" id="artesania">
+    <div class="craft-visual">
+      <svg viewBox="0 0 420 500" width="350" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:relative;z-index:1">
+        <!-- Large detailed shoe -->
+        <circle cx="210" cy="250" r="180" stroke="rgba(201,168,76,0.06)" stroke-width="1"/>
+        <g transform="translate(30,100)">
+          <path d="M25 300 Q6 300 4 282 L1 252 Q0 238 18 232 L320 188 Q342 185 354 198 L365 218 Q371 234 352 246 L323 253 Q300 260 278 257 L68 278 Q47 281 25 300Z" fill="#2c1f12" stroke="#c9a84c" stroke-width="2"/>
+          <path d="M318 188 L342 182 Q365 173 370 188 L371 225 Q371 244 352 250 L323 257Z" fill="#231810" stroke="#c9a84c" stroke-width="2"/>
+          <path d="M18 232 L21 204 Q24 155 55 130 L138 94 Q182 74 226 70 L336 64 Q376 61 394 78 L408 96 Q418 114 414 138 L410 188Z" fill="#3a2918" stroke="#c9a84c" stroke-width="2"/>
+          <path d="M21 204 Q24 163 52 140 L130 104 L200 82 L213 100 Q176 106 142 127 L80 162 Q51 183 38 214Z" fill="#2e2010" stroke="#c9a84c" stroke-width="1.5"/>
+          <path d="M214 70 L336 64 Q376 61 394 78 L408 96 L396 100 L336 84 L240 90 L214 88 Z" fill="#1e160a" stroke="#c9a84c" stroke-width="1.5"/>
+          <g stroke="#c9a84c" stroke-width="1.5" opacity="0.9">
+            <line x1="242" y1="87" x2="278" y2="82"/><line x1="290" y1="81" x2="326" y2="78"/>
+            <line x1="338" y1="77" x2="368" y2="79"/><line x1="378" y1="80" x2="400" y2="85"/>
+            <circle cx="242" cy="87" r="3.5" fill="#c9a84c"/><circle cx="278" cy="82" r="3.5" fill="#c9a84c"/>
+            <circle cx="290" cy="81" r="3.5" fill="#c9a84c"/><circle cx="326" cy="78" r="3.5" fill="#c9a84c"/>
+            <circle cx="338" cy="77" r="3.5" fill="#c9a84c"/><circle cx="368" cy="79" r="3.5" fill="#c9a84c"/>
+            <circle cx="378" cy="80" r="3.5" fill="#c9a84c"/><circle cx="400" cy="85" r="3.5" fill="#c9a84c"/>
+          </g>
+          <path d="M55 130 Q95 105 150 90 L210 74 Q175 100 140 122 Q100 148 72 188" stroke="rgba(201,168,76,0.25)" stroke-width="3" fill="none"/>
+          <!-- Stitching on toe -->
+          <path d="M22 200 Q26 170 50 152 L100 126 L148 110" stroke="rgba(201,168,76,0.2)" stroke-width="1.5" stroke-dasharray="4,4" fill="none"/>
+          <!-- Brand stamp -->
+          <text x="130" y="230" fill="rgba(201,168,76,0.3)" font-family="Cinzel, serif" font-size="10" letter-spacing="4">ROMANO</text>
+        </g>
+      </svg>
+    </div>
+    <div class="craft-content">
+      <div class="section-label">Proceso</div>
+      <h2 class="section-title">El Arte de la<br><em>Artesanía</em></h2>
+      <div class="craft-features">
+        <div class="craft-feature">
+          <div class="craft-num">01.</div>
+          <div>
+            <div class="craft-ft-title">Selección del Cuero</div>
+            <p class="craft-ft-desc">Sólo utilizamos pieles full-grain de las tenerías más prestigiosas de Italia y España. Cada cuero es inspeccionado a mano para garantizar máxima calidad.</p>
+          </div>
+        </div>
+        <div class="craft-feature">
+          <div class="craft-num">02.</div>
+          <div>
+            <div class="craft-ft-title">Corte y Horquillado</div>
+            <p class="craft-ft-desc">Los patrones son trazados a mano por maestros zapateros con más de 20 años de experiencia. Cada pieza es única, sin producción en masa.</p>
+          </div>
+        </div>
+        <div class="craft-feature">
+          <div class="craft-num">03.</div>
+          <div>
+            <div class="craft-ft-title">Cosido Goodyear Welt</div>
+            <p class="craft-ft-desc">La técnica Goodyear Welt garantiza durabilidad excepcional y permite la reparación indefinida de las suelas, convirtiendo cada par en una inversión para toda la vida.</p>
+          </div>
+        </div>
+        <div class="craft-feature">
+          <div class="craft-num">04.</div>
+          <div>
+            <div class="craft-ft-title">Acabado y Pulido</div>
+            <p class="craft-ft-desc">Lustrado a mano en múltiples capas con cremas naturales de alta gama. El brillo final es el resultado de horas de trabajo meticuloso.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div style="text-align:center;margin-bottom:.5rem">
+      <div class="section-label" style="justify-content:center">Clientes</div>
+    </div>
+    <h2 class="section-title" style="text-align:center">Lo que dicen<br><em>nuestros clientes</em></h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <p class="testi-text">Jamás había invertido tanto en un par de zapatos, pero desde el primer día entendí por qué. El cuero es increíblemente suave y la confección es impecable. Ya van tres años y están mejor que el primer día.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AC</div>
+          <div>
+            <div class="testi-name">Alejandro Córdoba</div>
+            <div class="testi-role">Director Ejecutivo · Madrid</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-text">Compré los Oxford Nero para mi boda y fueron los protagonistas del día. Muchos invitados preguntaron por ellos. El servicio de atención al cliente fue excepcional desde el primer contacto.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">RL</div>
+          <div>
+            <div class="testi-name">Roberto Luna</div>
+            <div class="testi-role">Arquitecto · Buenos Aires</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-text">La calidad del cuero es extraordinaria. Se nota la diferencia con cualquier otra marca. Los recibí perfectamente embalados en una caja de madera preciosa. Una experiencia de lujo de principio a fin.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">MS</div>
+          <div>
+            <div class="testi-name">Miguel Santos</div>
+            <div class="testi-role">Abogado · Ciudad de México</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter" id="contacto">
+    <div class="section-label" style="justify-content:center">Novedades</div>
+    <h2>Acceso Exclusivo</h2>
+    <p>Recibe primero las nuevas colecciones, descuentos privados y cuidados del cuero.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="Tu correo electrónico" />
+      <button>Suscribirse</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">DAMASCO CALZADOS</div>
+        <p>Maestros zapateros desde 1951. Cada par es una historia de dedicación, cuero premium y artesanía sin compromisos.</p>
+        <div class="social-links">
+          <a href="#" class="social-link">𝕏</a>
+          <a href="#" class="social-link">in</a>
+          <a href="#" class="social-link">ig</a>
+          <a href="#" class="social-link">fb</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Colección</h4>
+        <ul>
+          <li><a href="#">Oxford Clásico</a></li>
+          <li><a href="#">Derby Ejecutivo</a></li>
+          <li><a href="#">Mocasines</a></li>
+          <li><a href="#">Botas Chelsea</a></li>
+          <li><a href="#">Edición Limitada</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Información</h4>
+        <ul>
+          <li><a href="#">Sobre Nosotros</a></li>
+          <li><a href="#">Artesanía</a></li>
+          <li><a href="#">Cuidado del Cuero</a></li>
+          <li><a href="#">Guía de Tallas</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Atención</h4>
+        <ul>
+          <li><a href="#">Envíos y Devoluciones</a></li>
+          <li><a href="#">Garantía</a></li>
+          <li><a href="#">Reparaciones</a></li>
+          <li><a href="#">Contacto</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2.026 DAMASCO CALZADOS. Todos los derechos reservados.</p>
+      <div class="footer-payments">
+        <span class="payment-badge">Visa</span>
+        <span class="payment-badge">MC</span>
+        <span class="payment-badge">Amex</span>
+        <span class="payment-badge">PayPal</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CART SIDEBAR -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <div class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+      <h3>Tu Carrito</h3>
+      <button class="close-cart" onclick="closeCart()">×</button>
+    </div>
+    <div class="cart-body" id="cart-body"></div>
+    <div class="cart-footer">
+      <div class="cart-subtotal">
+        <span>Subtotal</span>
+        <span id="cart-total">$0</span>
+      </div>
+      <button class="checkout-btn">Proceder al Pago</button>
+      <button class="continue-btn" onclick="closeCart()">Continuar Comprando</button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">Añadido al carrito</div>
+
+  <script>
+    // ── PRODUCTS DATA ──────────────────────────────
+    const products = [
+      { id:1, name:"Oxford Nero Classico", brand:"Romano", category:"Oxford", price:485, sizes:[38,39,40,41,42,43], badge:"exclusive", emoji:"👞", rating:5, reviews:42 },
+      { id:2, name:"Oxford Brogue Heritage", brand:"Romano", category:"Oxford", price:520, oldPrice:620, sizes:[39,40,41,42], badge:"sale", emoji:"👞", rating:5, reviews:28 },
+      { id:3, name:"Derby Cognac Imperial", brand:"Romano", category:"Derby", price:460, sizes:[38,39,40,41,42,43,44], badge:"new", emoji:"👞", rating:4.5, reviews:15 },
+      { id:4, name:"Derby Bordeaux Élite", brand:"Romano", category:"Derby", price:510, sizes:[40,41,42,43], badge:null, emoji:"👞", rating:5, reviews:33 },
+      { id:5, name:"Mocasín Havana Gold", brand:"Romano", category:"Mocasín", price:380, sizes:[38,39,40,41,42], badge:"new", emoji:"👟", rating:4.5, reviews:19 },
+      { id:6, name:"Mocasín Penny Suave", brand:"Romano", category:"Mocasín", price:350, sizes:[39,40,41,42,43], badge:null, emoji:"👟", rating:4.5, reviews:24 },
+      { id:7, name:"Chelsea Boot Ebony", brand:"Romano", category:"Bota", price:590, sizes:[39,40,41,42,43], badge:"exclusive", emoji:"🥿", rating:5, reviews:38 },
+      { id:8, name:"Chelsea Boot Whisky", brand:"Romano", category:"Bota", price:610, sizes:[40,41,42], badge:"new", emoji:"🥿", rating:5, reviews:11 },
+    ];
+
+    const shoeColors = {
+      "Oxford": ["#3a2918","#231810","#2c1f12"],
+      "Derby":  ["#1e2840","#131d30","#202840"],
+      "Mocasín":["#5a3820","#3d2510","#4a2e16"],
+      "Bota":   ["#1a1a1a","#0e0e0e","#222222"],
+    };
+
+    let cart = [];
+    let currentFilter = 'all';
+
+    // ── RENDER PRODUCTS ───────────────────────────
+    function renderProducts(filter = 'all') {
+      const grid = document.getElementById('products-grid');
+      const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+      grid.innerHTML = filtered.map(p => {
+        const stars = '★'.repeat(Math.floor(p.rating)) + (p.rating % 1 ? '½' : '');
+        const availSizes = p.sizes.slice(0,5).map((_,i) => `<div class="size-dot ${i < p.sizes.length ? 'avail' : ''}"></div>`).join('');
+        const badge = p.badge ? `<div class="product-badge badge-${p.badge}">${p.badge === 'new' ? 'Nuevo' : p.badge === 'sale' ? 'Oferta' : 'Exclusivo'}</div>` : '';
+        const oldPrice = p.oldPrice ? `<span class="price-old">$${p.oldPrice}</span>` : '';
+        const col = shoeColors[p.category] || shoeColors["Oxford"];
+        return `
+          <div class="product-card">
+            <div class="product-img" style="background:linear-gradient(145deg,${col[0]},${col[1]});">
+              ${badge}
+              <span style="font-size:4.5rem;filter:drop-shadow(0 8px 24px rgba(0,0,0,.5));opacity:.85">${p.emoji}</span>
+              <div class="product-actions">
+                <button class="action-btn" title="Lista de deseos" onclick="event.stopPropagation()">♡</button>
+                <button class="action-btn add-cart" onclick="addToCart(${p.id});event.stopPropagation()">Añadir</button>
+                <button class="action-btn" title="Vista rápida" onclick="event.stopPropagation()">⊕</button>
+              </div>
+            </div>
+            <div class="product-info">
+              <div class="product-brand">${p.brand}</div>
+              <div class="product-name">${p.name}</div>
+              <div class="product-rating">
+                <span class="stars">${stars}</span>
+                <span class="rating-count">(${p.reviews})</span>
+              </div>
+              <div class="product-footer">
+                <div>${oldPrice}<span class="product-price">$${p.price}</span></div>
+                <div class="product-sizes">${availSizes}</div>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function filterProducts(cat, btn) {
+      currentFilter = cat;
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderProducts(cat === 'all' ? 'all' : cat);
+      if (!btn) document.getElementById('coleccion').scrollIntoView({behavior:'smooth'});
+    }
+
+    // ── CART ──────────────────────────────────────
+    function addToCart(id) {
+      const product = products.find(p => p.id === id);
+      const existing = cart.find(i => i.id === id);
+      if (existing) existing.qty++;
+      else cart.push({ ...product, qty: 1 });
+      updateCartUI();
+      showToast(`${product.name} añadido al carrito`);
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(i => i.id !== id);
+      updateCartUI();
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) removeFromCart(id);
+      else updateCartUI();
+    }
+
+    function updateCartUI() {
+      const count = cart.reduce((s,i) => s + i.qty, 0);
+      document.getElementById('cart-count').textContent = count;
+      const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
+      document.getElementById('cart-total').textContent = `$${total.toLocaleString()}`;
+      const body = document.getElementById('cart-body');
+      if (cart.length === 0) {
+        body.innerHTML = `<div class="cart-empty"><div class="cart-empty-icon">👞</div><p>Tu carrito está vacío</p></div>`;
+      } else {
+        body.innerHTML = cart.map(item => `
+          <div class="cart-item">
+            <div class="cart-item-img">${item.emoji}</div>
+            <div style="flex:1">
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-detail">${item.category} · Cuero</div>
+              <div class="cart-item-price">$${(item.price * item.qty).toLocaleString()}</div>
+              <div class="cart-item-qty">
+                <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+                <span class="qty-num">${item.qty}</span>
+                <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+              </div>
+            </div>
+            <button class="remove-item" onclick="removeFromCart(${item.id})">✕</button>
+          </div>`).join('');
+      }
+    }
+
+    function openCart() {
+      document.getElementById('cart-sidebar').classList.add('open');
+      document.getElementById('cart-overlay').classList.add('open');
+    }
+
+    function closeCart() {
+      document.getElementById('cart-sidebar').classList.remove('open');
+      document.getElementById('cart-overlay').classList.remove('open');
+    }
+
+    // ── TOAST ─────────────────────────────────────
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2800);
+    }
+
+    // ── NAVBAR SCROLL ─────────────────────────────
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // ── INIT ──────────────────────────────────────
+    renderProducts();
+    updateCartUI();
+  </script>
+</body>
+</html>
